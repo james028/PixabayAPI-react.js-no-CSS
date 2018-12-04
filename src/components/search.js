@@ -37,14 +37,16 @@ class App extends Component {
     e.preventDefault();
 
     //let val = e.target.elements.searchText.value;
-    let val2 = e.target.value;
+    let val = e.target.value;
     this.setState(
       {
-        [e.target.name]: val2
+        [e.target.name]: val
       },
       () => {
-        if (val2 === "") {
-          images: [];
+        if (val === "") {
+          this.setState({
+            images: []
+          });
         } else {
           axios
             .get(
@@ -101,7 +103,13 @@ class App extends Component {
             ))}
           </select>
         </form>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "50px"
+          }}
+        >
           {this.state.images.length > 0
             ? this.state.images.map(e => {
                 return (
@@ -110,11 +118,16 @@ class App extends Component {
                       src={e.largeImageURL}
                       className="photo"
                       onClick={() => this.showModal(e.largeImageURL)}
+                      alt="modal-ph-1"
                     />
                     <Modal isOpen={this.state.modal}>
                       modal
                       <button onClick={this.closeModal}>Close</button>
-                      <img src={this.state.currImg} className="photo" />
+                      <img
+                        src={this.state.currImg}
+                        className="photo"
+                        alt="modal-ph"
+                      />
                     </Modal>
                   </div>
                 );
